@@ -1,0 +1,3383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hisaab - A clean, handcrafted Web Billing & Inventory System with SQLite3, stock management, customer accounts, and real-time dashboard analytics, created by Prerna Taktode.">
+  <title>Hisaab | Billing &amp; Inventory System</title>
+  
+  <!-- Professional Corporate & Tech Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ============================================================
+       HISAAB POS PRO - MODERN SAAS DESIGN SYSTEM
+       High-End Monochromatic Zinc Palette • Tabular Precision
+       ============================================================ */
+    :root {
+      --font-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-number: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      /* Surfaces & Canvas */
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f8fafc;
+      --surface-hover: #f1f5f9;
+      --surface-elevated: #ffffff;
+
+      /* Neutral Zinc Typography */
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      
+      /* Crisp Borders */
+      --border: #e2e8f0;
+      --border-subtle: #f1f5f9;
+      --border-focus: #0f172a;
+
+      /* Primary Brand / Action */
+      --primary: #0f172a;
+      --primary-hover: #1e293b;
+      --primary-active: #334155;
+      --primary-text: #ffffff;
+
+      /* Soft Modern Status Colors */
+      --badge-in-bg: #ecfdf5;
+      --badge-in-text: #065f46;
+      --badge-in-border: #a7f3d0;
+
+      --badge-low-bg: #fffbeb;
+      --badge-low-text: #92400e;
+      --badge-low-border: #fde68a;
+
+      --badge-out-bg: #fef2f2;
+      --badge-out-text: #991b1b;
+      --badge-out-border: #fecaca;
+
+      --badge-paid-bg: #0f172a;
+      --badge-paid-text: #ffffff;
+
+      --badge-partial-bg: #fff7ed;
+      --badge-partial-text: #9a3412;
+      --badge-partial-border: #fed7aa;
+
+      --badge-pending-bg: #f1f5f9;
+      --badge-pending-text: #334155;
+      --badge-pending-border: #cbd5e1;
+
+      /* Multi-Layered Soft Diffused Shadows */
+      --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+
+      /* Border Radii */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+
+      /* Transitions */
+      --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.font-inter, body.font-inter * {
+      --font-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      --font-number: 'Inter', -apple-system, sans-serif;
+    }
+
+    body.font-jakarta, body.font-jakarta * {
+      --font-base: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-number: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    body.font-outfit, body.font-outfit * {
+      --font-base: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Outfit', -apple-system, sans-serif;
+      --font-number: 'Outfit', -apple-system, sans-serif;
+    }
+
+    body.font-roboto, body.font-roboto * {
+      --font-base: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Roboto', -apple-system, sans-serif;
+      --font-number: 'Roboto', -apple-system, sans-serif;
+    }
+
+    body.font-mono, body.font-mono * {
+      --font-base: 'Space Mono', monospace;
+      --font-heading: 'Space Mono', monospace;
+      --font-number: 'Space Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-base);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      letter-spacing: -0.011em;
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: var(--radius-full);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Header Navigation - Glassmorphism Bar */
+    header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    }
+
+    .header-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-fast);
+    }
+
+    .brand:hover .brand-icon {
+      transform: scale(1.04);
+      background: #1e293b;
+    }
+
+    .brand-text h1 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      line-height: 1.1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-pro {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-text p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .font-select-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 3px 6px 3px 10px;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .font-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .font-dropdown {
+      border: none !important;
+      box-shadow: none !important;
+      padding: 4px 6px !important;
+      font-size: 0.82rem !important;
+      font-weight: 600;
+      background: transparent !important;
+      cursor: pointer;
+      outline: none;
+      color: var(--text);
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-xs);
+      text-decoration: none;
+    }
+
+    .nav-btn:hover {
+      background: var(--surface-hover);
+      border-color: #cbd5e1;
+      color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .nav-btn.active-nav {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .history-badge {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .author-badge {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      cursor: default;
+    }
+
+    .author-badge span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+      display: inline-block;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Main Container Layout */
+    main {
+      max-width: 1440px;
+      margin: 20px auto;
+      padding: 0 28px;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.42fr 1fr;
+      gap: 24px;
+      width: 100%;
+    }
+
+    @media (max-width: 1080px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Search & Filter Toolbar */
+    .catalog-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 11px 16px 11px 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      background: #f8fafc;
+      color: var(--text);
+      outline: none;
+      box-shadow: var(--shadow-xs);
+      transition: var(--transition-fast);
+    }
+
+    .search-input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .category-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-pill {
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition-fast);
+    }
+
+    .category-pill:hover {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .category-pill.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: var(--shadow-xs);
+    }
+
+    /* Product Grid */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      overflow-y: auto;
+      max-height: 640px;
+      padding-right: 4px;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .product-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .prod-icon {
+      width: 44px;
+      height: 44px;
+      background: #f1f5f9;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .prod-tags {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .prod-category {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+    }
+
+    .prod-sku {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    .prod-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.35;
+      height: 2.7em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .price-stock-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .prod-price {
+      font-family: var(--font-number);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .stock-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stock-badge.in-stock {
+      background: var(--badge-in-bg);
+      color: var(--badge-in-text);
+      border: 1px solid var(--badge-in-border);
+    }
+
+    .stock-badge.low-stock {
+      background: var(--badge-low-bg);
+      color: var(--badge-low-text);
+      border: 1px solid var(--badge-low-border);
+    }
+
+    .stock-badge.out-stock {
+      background: var(--badge-out-bg);
+      color: var(--badge-out-text);
+      border: 1px solid var(--badge-out-border);
+    }
+
+    .add-btn {
+      width: 100%;
+      background: var(--surface);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: var(--transition-fast);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .add-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .add-btn:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .add-btn:disabled {
+      background: #f8fafc;
+      color: var(--text-light);
+      border-color: var(--border-subtle);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Cart Customer Section */
+    .customer-card-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .cust-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .link-action {
+      font-size: 0.82rem;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition-fast);
+    }
+
+    .link-action:hover {
+      background: #e2e8f0;
+    }
+
+    /* Discount Section */
+    .discount-container {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+
+    .discount-presets {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .discount-chip {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      color: var(--text);
+      box-shadow: var(--shadow-xs);
+      text-align: center;
+    }
+
+    .discount-chip:hover {
+      background: var(--surface-hover);
+      border-color: #cbd5e1;
+    }
+
+    .discount-chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .custom-discount-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .custom-discount-input {
+      width: 70px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      outline: none;
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .custom-discount-input:focus {
+      border-color: var(--primary);
+    }
+
+    /* Cart Items List */
+    .cart-items-container {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 230px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      padding: 8px;
+      margin-bottom: 14px;
+    }
+
+    .empty-cart-msg {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .cart-row {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr auto;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition-fast);
+    }
+
+    .cart-row:hover {
+      border-color: #e2e8f0;
+      background: #f1f5f9;
+    }
+
+    .cart-item-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cart-item-rate {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2px;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      transition: var(--transition-fast);
+    }
+
+    .qty-btn:hover {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .qty-num {
+      font-size: 0.86rem;
+      font-weight: 700;
+      min-width: 20px;
+      text-align: center;
+      font-family: var(--font-number);
+    }
+
+    .cart-item-total {
+      font-family: var(--font-number);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: right;
+      letter-spacing: -0.02em;
+    }
+
+    .del-btn {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px 6px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .del-btn:hover {
+      color: #ef4444;
+      background: #fee2e2;
+    }
+
+    /* Bill Summary & Payment Section */
+    .summary-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .summary-discount {
+      font-weight: 600;
+      color: #16a34a;
+    }
+
+    .summary-total {
+      border-top: 1px dashed var(--border);
+      padding-top: 12px;
+      margin-top: 8px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .total-amount {
+      font-family: var(--font-number);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .payment-calc-box {
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 10px;
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .payment-input-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .paid-amount-field {
+      width: 120px;
+      text-align: right;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.95rem;
+      outline: none;
+      font-family: var(--font-number);
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .paid-amount-field:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .status-badge.paid {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .status-badge.partially-paid {
+      background: var(--badge-partial-bg);
+      color: var(--badge-partial-text);
+      border: 1px solid var(--badge-partial-border);
+    }
+
+    .status-badge.pending {
+      background: var(--badge-pending-bg);
+      color: var(--badge-pending-text);
+      border: 1px solid var(--badge-pending-border);
+    }
+
+    .status-badge.cancelled {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .action-group {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 10px;
+    }
+
+    .checkout-btn {
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid #0f172a;
+      padding: 13px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1.02rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-fast);
+    }
+
+    .checkout-btn:hover:not(:disabled) {
+      background: #1e293b;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .checkout-btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .checkout-btn:disabled {
+      background: #e2e8f0;
+      color: #94a3b8;
+      border-color: #e2e8f0;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .clear-btn {
+      background: #ffffff;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 13px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-xs);
+      transition: var(--transition-fast);
+    }
+
+    .clear-btn:hover {
+      background: #fee2e2;
+      color: #ef4444;
+      border-color: #fca5a5;
+    }
+
+    /* Modals & Popups - Glassmorphism */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .receipt-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 440px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+      animation: modal-enter 0.2s ease-out;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 900px;
+      max-height: 88vh;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: modal-enter 0.2s ease-out;
+    }
+
+    @keyframes modal-enter {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+
+    .modal-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #f8fafc;
+    }
+
+    /* Thermal Receipt Paper */
+    .receipt-paper {
+      padding: 28px;
+      background: #ffffff;
+      color: #0f172a;
+      overflow-y: auto;
+      font-family: var(--font-base);
+    }
+
+    .receipt-header {
+      text-align: center;
+      margin-bottom: 16px;
+      border-bottom: 1px dashed #cbd5e1;
+      padding-bottom: 14px;
+    }
+
+    .receipt-store {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #0f172a;
+      line-height: 1.1;
+    }
+
+    .receipt-author-sub {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .receipt-meta {
+      font-size: 0.84rem;
+      color: #334155;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .receipt-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+    }
+
+    .receipt-table th {
+      border-bottom: 1px solid #0f172a;
+      padding: 6px 0;
+      text-align: left;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .receipt-table td {
+      padding: 7px 0;
+      border-bottom: 1px dotted #e2e8f0;
+      color: #0f172a;
+    }
+
+    .receipt-totals {
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      color: #334155;
+    }
+
+    .receipt-grand {
+      font-family: var(--font-number);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      border-top: 1px solid #0f172a;
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+
+    .receipt-footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .receipt-actions {
+      display: flex;
+      gap: 10px;
+      padding: 14px 24px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+    }
+
+    .print-btn {
+      flex: 1;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid #0f172a;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--shadow-xs);
+      transition: var(--transition-fast);
+    }
+
+    .print-btn:hover {
+      background: #1e293b;
+      transform: translateY(-1px);
+    }
+
+    .close-modal-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-xs);
+      transition: var(--transition-fast);
+    }
+
+    .close-modal-btn:hover {
+      background: #f1f5f9;
+    }
+
+    /* Data Tables in Modals */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .data-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text);
+    }
+
+    .data-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    .btn-action-sm {
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      color: var(--text);
+    }
+
+    .btn-action-sm:hover {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .btn-danger-sm {
+      background: #ffffff;
+      color: #ef4444;
+      border: 1px solid #fca5a5;
+    }
+
+    .btn-danger-sm:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+    }
+
+    /* Dashboard Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-xs);
+      transition: var(--transition-fast);
+    }
+
+    .stat-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .stat-val {
+      font-family: var(--font-number);
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 2px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-sub {
+      font-size: 0.76rem;
+      color: var(--text-light);
+    }
+
+    .dashboard-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: var(--radius-md);
+      width: fit-content;
+    }
+
+    .d-tab-btn {
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .d-tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .section-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .section-box-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Notification Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 18px;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid #334155;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-xl);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: toast-enter 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes toast-enter {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      margin-top: auto;
+    }
+
+    footer strong {
+      color: var(--primary);
+    }
+
+    /* Print Styles */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .receipt-paper, .receipt-paper * {
+        visibility: visible;
+      }
+      .modal-overlay {
+        background: none;
+        display: block !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0;
+      }
+      .receipt-container {
+        box-shadow: none;
+        max-width: 100%;
+        border-radius: 0;
+        border: none;
+      }
+      .receipt-actions {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h1>Hisaab <span class="badge-pro">POS PRO</span></h1>
+          <p>Modern Billing &amp; Inventory &bull; SQLite3 Persistent</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <!-- Font Selection Dropdown -->
+        <div class="font-select-wrapper">
+          <span class="font-label">🔤 Font:</span>
+          <select id="font-selector" class="nav-btn font-dropdown">
+            <option value="inter" selected>💼 Inter (Clean Tech UI)</option>
+            <option value="jakarta">🏢 Plus Jakarta Sans (Enterprise)</option>
+            <option value="outfit">📐 Outfit (Modern Geometric)</option>
+            <option value="roboto">📋 Roboto (Standard UI)</option>
+            <option value="mono">⌨️ Space Mono (Financial Monospace)</option>
+          </select>
+        </div>
+
+        <!-- Dashboard Button -->
+        <button id="open-dashboard-btn" class="nav-btn" title="View Business Analytics & Revenue">
+          <span>📊</span> Dashboard
+        </button>
+
+        <!-- Inventory Button -->
+        <button id="open-inventory-btn" class="nav-btn" title="Manage Products & Stock">
+          <span>📦</span> Inventory
+        </button>
+
+        <!-- Customers Button -->
+        <button id="open-customers-btn" class="nav-btn" title="Manage Customer Records">
+          <span>👥</span> Customers
+        </button>
+
+        <!-- Customer Order History Button -->
+        <button id="open-history-btn" class="nav-btn" title="View past customer orders">
+          <span>📜</span> Order History 
+          <span id="history-badge" class="history-badge">0</span>
+        </button>
+
+        <!-- Developer Credit Badge -->
+        <div class="author-badge">
+          <span class="dot"></span>
+          Developer: <strong>Prerna Taktode</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main>
+    <!-- Left Column: Product Catalog -->
+    <section class="section-card">
+      <div class="section-header">
+        <h2 class="section-title">📦 Product Catalog</h2>
+        <span id="product-count" style="font-size: 0.95rem; color: var(--text-muted); font-weight: 700;">Loading...</span>
+      </div>
+
+      <div class="catalog-toolbar">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="Search by name, SKU, barcode, or category (e.g. Milk, SKU-MLK-101)..." 
+            autocomplete="off"
+          >
+        </div>
+        <div class="category-pills" id="category-pills">
+          <button class="category-pill active" data-cat="All">All Items</button>
+          <button class="category-pill" data-cat="Dairy">Dairy</button>
+          <button class="category-pill" data-cat="Bakery">Bakery</button>
+          <button class="category-pill" data-cat="Groceries">Groceries</button>
+          <button class="category-pill" data-cat="Beverages">Beverages</button>
+          <button class="category-pill" data-cat="Snacks">Snacks</button>
+        </div>
+      </div>
+
+      <div id="catalog-grid" class="catalog-grid">
+        <!-- Injected via JavaScript from SQLite Database -->
+      </div>
+    </section>
+
+    <!-- Right Column: Cart & Checkout -->
+    <section class="section-card">
+      <div class="section-header">
+        <h2 class="section-title">🛒 Current Bill</h2>
+        <span id="cart-item-count" style="font-size: 0.95rem; font-weight: 700;">0 Items</span>
+      </div>
+
+      <!-- Customer Details Section -->
+      <div class="customer-card-box">
+        <div class="cust-row-top">
+          <span style="font-size: 0.95rem; font-weight: 700;">👤 Customer Details</span>
+          <button type="button" class="link-action" id="toggle-new-cust-btn">+ New Customer</button>
+        </div>
+
+        <div class="form-group" id="cust-select-group">
+          <label for="customer-select" class="form-label">Select Registered Customer</label>
+          <select id="customer-select" class="form-select">
+            <option value="">-- Choose Customer or Enter Below --</option>
+          </select>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="customer-name" class="form-label">Name *</label>
+            <input 
+              type="text" 
+              id="customer-name" 
+              class="form-input" 
+              placeholder="e.g. Rahul Sharma" 
+              value="Guest Customer"
+            >
+          </div>
+          <div class="form-group">
+            <label for="customer-phone" class="form-label">Phone *</label>
+            <input 
+              type="tel" 
+              id="customer-phone" 
+              class="form-input" 
+              placeholder="e.g. 9823012345" 
+              value="9876543210"
+            >
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 6px;">
+          <div class="form-group">
+            <label for="customer-email" class="form-label">Email</label>
+            <input 
+              type="email" 
+              id="customer-email" 
+              class="form-input" 
+              placeholder="e.g. rahul@example.com"
+            >
+          </div>
+          <div class="form-group">
+            <label for="customer-address" class="form-label">Address</label>
+            <input 
+              type="text" 
+              id="customer-address" 
+              class="form-input" 
+              placeholder="e.g. Flat 101, Mumbai"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label for="payment-method" class="form-label">Payment Method</label>
+        <select id="payment-method" class="form-select">
+          <option value="Cash" selected>💵 Cash</option>
+          <option value="UPI / QR">📱 UPI / QR Code</option>
+          <option value="Credit/Debit Card">💳 Credit / Debit Card</option>
+          <option value="Net Banking">🏦 Net Banking</option>
+        </select>
+      </div>
+
+      <!-- Discount System -->
+      <div class="discount-container">
+        <label class="form-label">Apply Discount (%)</label>
+        <div class="discount-presets">
+          <button type="button" class="discount-chip active" data-disc="0">None (0%)</button>
+          <button type="button" class="discount-chip" data-disc="5">5%</button>
+          <button type="button" class="discount-chip" data-disc="10">10%</button>
+          <button type="button" class="discount-chip" data-disc="15">15%</button>
+        </div>
+        <div class="custom-discount-row">
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Custom %:</span>
+          <input 
+            type="number" 
+            id="custom-discount-input" 
+            class="custom-discount-input" 
+            min="0" 
+            max="100" 
+            value="0"
+          >
+          <span style="font-size: 0.85rem; color: var(--text-muted);">% off subtotal</span>
+        </div>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cart-container" class="cart-items-container">
+        <div class="empty-cart-msg">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🛒</div>
+          <div style="font-weight: 600; color: var(--text); margin-bottom: 4px;">Current bill is empty</div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">Select products from the catalog to build this customer order.</div>
+        </div>
+      </div>
+
+      <!-- Price Breakdown & Payment Summary -->
+      <div class="summary-card">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span id="summary-subtotal" style="font-family: var(--font-number); font-size: 1.15rem; font-weight: 700;">₹0.00</span>
+        </div>
+        <div class="summary-line summary-discount" id="summary-discount-row" style="display: none;">
+          <span id="summary-discount-label">Discount (0%)</span>
+          <span id="summary-discount-val">-₹0.00</span>
+        </div>
+        <div class="summary-line">
+          <span>Tax (5% GST)</span>
+          <span id="summary-tax">₹0.00</span>
+        </div>
+        <div class="summary-line summary-total">
+          <span>Grand Total</span>
+          <span id="summary-total" class="total-amount">₹0.00</span>
+        </div>
+
+        <!-- Payment Status & Pending Calculation -->
+        <div class="payment-calc-box">
+          <div class="payment-input-row">
+            <span>Paid Amount (₹):</span>
+            <input 
+              type="number" 
+              id="paid-amount-input" 
+              class="paid-amount-field" 
+              step="0.01" 
+              min="0" 
+              placeholder="0.00"
+            >
+          </div>
+          <div class="summary-line" style="margin-top: 4px;">
+            <span>Pending Dues:</span>
+            <span id="summary-pending" style="font-weight: 700; font-family: var(--font-number); font-size: 1.1rem;">₹0.00</span>
+          </div>
+          <div class="summary-line">
+            <span>Payment Status:</span>
+            <span id="summary-status-badge" class="status-badge paid">Paid</span>
+          </div>
+          <div id="paid-error-msg" style="display: none; font-size: 0.85rem; font-weight: 700;">
+            ⚠️ Paid amount cannot exceed Grand Total.
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-group">
+        <button id="checkout-btn" class="checkout-btn" disabled>
+          <span>🧾</span> Checkout &amp; Generate Bill
+        </button>
+        <button id="clear-btn" class="clear-btn">
+          Clear
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal 1: Printable Official Receipt -->
+  <div id="receipt-modal" class="modal-overlay">
+    <div class="receipt-container">
+      <div class="receipt-paper" id="printable-receipt">
+        <div class="receipt-header">
+          <div class="receipt-store">HISAAB</div>
+          <div class="receipt-author-sub">Developed by Prerna Taktode</div>
+        </div>
+
+        <div class="receipt-meta">
+          <div><strong>Invoice :</strong> <span id="r-inv-num">INV-0001</span></div>
+          <div><strong>Date    :</strong> <span id="r-date">--</span></div>
+          <div><strong>Customer:</strong> <span id="r-customer">Guest Customer</span></div>
+          <div id="r-phone-row"><strong>Phone   :</strong> <span id="r-phone">--</span></div>
+          <div id="r-addr-row" style="display:none;"><strong>Address :</strong> <span id="r-addr">--</span></div>
+          <div><strong>Payment :</strong> <span id="r-payment">Cash</span></div>
+        </div>
+
+        <table class="receipt-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th style="text-align: center;">Qty</th>
+              <th style="text-align: right;">Rate</th>
+              <th style="text-align: right;">Total</th>
+            </tr>
+          </thead>
+          <tbody id="r-items-body">
+            <!-- Populated on Checkout -->
+          </tbody>
+        </table>
+
+        <div class="receipt-totals">
+          <div class="receipt-row">
+            <span>Subtotal:</span>
+            <span id="r-subtotal">₹0.00</span>
+          </div>
+          <div class="receipt-row receipt-discount-line" id="r-discount-row" style="display: none;">
+            <span id="r-discount-label">Discount:</span>
+            <span id="r-discount">-₹0.00</span>
+          </div>
+          <div class="receipt-row">
+            <span>GST (5%):</span>
+            <span id="r-tax">₹0.00</span>
+          </div>
+          <div class="receipt-row receipt-grand">
+            <span>GRAND TOTAL:</span>
+            <span id="r-grand">₹0.00</span>
+          </div>
+          <div class="receipt-row" style="margin-top: 6px; font-weight: 700;">
+            <span>Paid Amount:</span>
+            <span id="r-paid">₹0.00</span>
+          </div>
+          <div class="receipt-row" style="font-weight: 700;">
+            <span>Pending Balance:</span>
+            <span id="r-pending">₹0.00</span>
+          </div>
+          <div class="receipt-row" style="margin-top: 4px;">
+            <span>Status:</span>
+            <span id="r-status" class="status-badge paid">Paid</span>
+          </div>
+        </div>
+
+        <div class="receipt-footer">
+          <div>*** THANK YOU FOR SHOPPING ***</div>
+          <div style="margin-top: 4px; font-weight: 700;">Hisaab &bull; Project Made by Prerna Taktode</div>
+        </div>
+      </div>
+
+      <div class="receipt-actions">
+        <button class="print-btn" id="print-receipt-btn">
+          🖨️ Print / Save PDF
+        </button>
+        <button class="close-modal-btn" id="new-bill-btn">
+          ✨ New Bill
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Customer & Order History -->
+  <div id="history-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.4rem;">📜</span>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--primary);">Customer Billing History</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Persistent SQLite3 Sales Records &amp; Invoices</p>
+          </div>
+        </div>
+        <button class="del-btn" id="close-history-btn" style="font-size: 1.2rem; padding: 6px;">✕</button>
+      </div>
+
+      <div style="padding: 12px 20px; background: #f8fafc; border-bottom: 1px solid var(--border); display: flex; gap: 12px; flex-wrap: wrap;">
+        <input 
+          type="text" 
+          id="history-search-input" 
+          class="search-input" 
+          placeholder="Filter orders by customer name, phone, or invoice #..."
+          style="flex: 1; min-width: 240px; padding: 6px 10px;"
+        >
+        <select id="history-status-filter" class="form-select" style="width: 170px;">
+          <option value="All">All Statuses</option>
+          <option value="Paid">Paid</option>
+          <option value="Partially Paid">Partially Paid</option>
+          <option value="Pending">Pending</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="modal-body" style="padding: 0;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Invoice #</th>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th style="text-align: right;">Total</th>
+              <th style="text-align: right;">Paid</th>
+              <th style="text-align: right;">Pending</th>
+              <th style="text-align: center;">Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <!-- Populated via SQLite API -->
+          </tbody>
+        </table>
+        <div id="history-empty-msg" style="display: none; text-align: center; padding: 40px; color: var(--text-muted);">
+          No billing records found matching your filter criteria.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Business Analytics Dashboard -->
+  <div id="dashboard-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 960px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.4rem;">📊</span>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--primary);">Hisaab Business Dashboard</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Real-time statistics dynamically calculated from SQLite3</p>
+          </div>
+        </div>
+        <button class="del-btn" id="close-dashboard-btn" style="font-size: 1.2rem; padding: 6px;">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Time Period Selector -->
+        <div class="dashboard-tabs">
+          <button class="d-tab-btn active" data-period="All Time">All Time</button>
+          <button class="d-tab-btn" data-period="Today">Today</button>
+          <button class="d-tab-btn" data-period="This Week">This Week</button>
+          <button class="d-tab-btn" data-period="This Month">This Month</button>
+        </div>
+
+        <!-- 4 Key Stat Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">💰 Total Revenue</span>
+            <span class="stat-val" id="d-stat-revenue">₹0.00</span>
+            <span class="stat-sub" id="d-stat-collected">₹0.00 collected</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">⏳ Pending Dues</span>
+            <span class="stat-val" id="d-stat-pending">₹0.00</span>
+            <span class="stat-sub" id="d-stat-pending-bills">0 pending bills</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">🧾 Transactions</span>
+            <span class="stat-val" id="d-stat-sales">0</span>
+            <span class="stat-sub" id="d-stat-units">0 units sold</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">⚠️ Low Stock Alerts</span>
+            <span class="stat-val" id="d-stat-low-stock">0</span>
+            <span class="stat-sub">Needs restock</span>
+          </div>
+        </div>
+
+        <!-- Top Selling Products Section -->
+        <div class="section-box">
+          <div class="section-box-title">
+            <span>🔥 Top Selling Products</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Based on actual quantities sold</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>SKU</th>
+                <th>Category</th>
+                <th style="text-align: right;">Units Sold</th>
+                <th style="text-align: right;">Revenue Generated</th>
+              </tr>
+            </thead>
+            <tbody id="top-selling-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Low Stock Products Section -->
+        <div class="section-box">
+          <div class="section-box-title">
+            <span>⚠️ Low Stock &amp; Inventory Alerts</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Stock &le; Low Stock Threshold</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>SKU</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Current Stock</th>
+                <th>Threshold</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="low-stock-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Inventory & Product Management -->
+  <div id="inventory-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 960px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.4rem;">📦</span>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--primary);">Inventory &amp; Product Management</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Add, edit, restock, and search catalog products in SQLite3</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="nav-btn active-nav" id="btn-open-add-product">+ Add Product</button>
+          <button class="del-btn" id="close-inventory-btn" style="font-size: 1.2rem; padding: 6px;">✕</button>
+        </div>
+      </div>
+
+      <div style="padding: 12px 20px; background: #f8fafc; border-bottom: 1px solid var(--border);">
+        <input 
+          type="text" 
+          id="inv-search-input" 
+          class="search-input" 
+          placeholder="Search products by Name, SKU, Barcode, or Category..."
+          style="padding: 6px 10px;"
+        >
+      </div>
+
+      <div class="modal-body" style="padding: 0;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Icon</th>
+              <th>Product Name</th>
+              <th>SKU</th>
+              <th>Barcode</th>
+              <th>Category</th>
+              <th style="text-align: right;">Price</th>
+              <th style="text-align: right;">Stock</th>
+              <th style="text-align: right;">Threshold</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-Modal: Add / Edit Product Form -->
+  <div id="product-form-modal" class="modal-overlay" style="z-index: 120;">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 id="product-form-title" style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--primary);">Add New Product</h3>
+        <button class="del-btn" id="close-product-form-btn">✕</button>
+      </div>
+      <form id="product-form" class="modal-body">
+        <input type="hidden" id="p-form-id">
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Product Name *</label>
+            <input type="text" id="p-form-name" class="form-input" required placeholder="e.g. Greek Yogurt (500g)">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <input type="text" id="p-form-category" class="form-input" placeholder="e.g. Dairy" value="General">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">SKU * (Unique)</label>
+            <input type="text" id="p-form-sku" class="form-input" required placeholder="e.g. SKU-YGT-201">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Barcode (Unique)</label>
+            <input type="text" id="p-form-barcode" class="form-input" placeholder="e.g. 890101000201">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Selling Price (₹) *</label>
+            <input type="number" id="p-form-price" class="form-input" step="0.01" min="0" required placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cost Price (₹)</label>
+            <input type="number" id="p-form-cost" class="form-input" step="0.01" min="0" placeholder="0.00" value="0.00">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Stock Quantity *</label>
+            <input type="number" id="p-form-stock" class="form-input" min="0" required placeholder="20" value="20">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Low Stock Threshold</label>
+            <input type="number" id="p-form-threshold" class="form-input" min="0" placeholder="5" value="5">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Display Emoji / Icon</label>
+          <input type="text" id="p-form-icon" class="form-input" placeholder="🛍️" value="🛍️">
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="close-modal-btn" id="cancel-product-form-btn">Cancel</button>
+        <button type="submit" form="product-form" class="checkout-btn" style="padding: 6px 18px;">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Customers Management -->
+  <div id="customers-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 920px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.4rem;">👥</span>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--primary);">Customer Directory</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Manage customer profiles and view individual purchase history</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="nav-btn active-nav" id="btn-open-add-customer">+ Add Customer</button>
+          <button class="del-btn" id="close-customers-btn" style="font-size: 1.2rem; padding: 6px;">✕</button>
+        </div>
+      </div>
+
+      <div style="padding: 12px 20px; background: #f8fafc; border-bottom: 1px solid var(--border);">
+        <input 
+          type="text" 
+          id="cust-search-input" 
+          class="search-input" 
+          placeholder="Search by customer name, phone number, or email..."
+          style="padding: 6px 10px;"
+        >
+      </div>
+
+      <div class="modal-body" style="padding: 0;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="customers-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-Modal: Add / Edit Customer Form -->
+  <div id="customer-form-modal" class="modal-overlay" style="z-index: 120;">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 id="customer-form-title" style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--primary);">Add New Customer</h3>
+        <button class="del-btn" id="close-customer-form-btn">✕</button>
+      </div>
+      <form id="customer-form" class="modal-body">
+        <input type="hidden" id="c-form-id">
+        <div class="form-group">
+          <label class="form-label">Customer Name *</label>
+          <input type="text" id="c-form-name" class="form-input" required placeholder="e.g. Suman Gupta">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number * (min 7 digits)</label>
+          <input type="tel" id="c-form-phone" class="form-input" required placeholder="e.g. 9823098230">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="c-form-email" class="form-input" placeholder="e.g. suman@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Physical Address</label>
+          <input type="text" id="c-form-address" class="form-input" placeholder="e.g. Flat 12B, Bandra West, Mumbai">
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="close-modal-btn" id="cancel-customer-form-btn">Cancel</button>
+        <button type="submit" form="customer-form" class="checkout-btn" style="padding: 6px 18px;">Save Customer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-Modal: Customer Purchase History -->
+  <div id="cust-history-modal" class="modal-overlay" style="z-index: 125;">
+    <div class="modal-card" style="max-width: 680px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="cust-hist-title" style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--primary);">Customer Purchases</h3>
+          <p id="cust-hist-sub" style="font-size: 0.85rem; color: var(--text-muted);"></p>
+        </div>
+        <button class="del-btn" id="close-cust-history-btn">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 0;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Invoice #</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Paid</th>
+              <th>Pending</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cust-hist-body"></tbody>
+        </table>
+        <div id="cust-hist-empty" style="display:none; text-align:center; padding:30px; color:var(--text-muted);">
+          No purchase records found for this customer.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast">Message</div>
+
+  <!-- Footer -->
+  <footer>
+    <p><strong>Hisaab</strong> &bull; Minimal Billing &amp; Inventory System &bull; Designed &amp; Developed solely by <strong>Prerna Taktode</strong> &bull; Persistent SQLite3 Database</p>
+  </footer>
+
+  <!-- Client-side Logic -->
+  <script>
+    // State
+    let products = [];
+    let customers = [];
+    const cart = new Map(); // id -> { id, code, name, sku, price, qty, stock }
+    let currentDiscountPercent = 0;
+    let selectedCategory = "All";
+    let activeDashboardPeriod = "All Time";
+
+    // DOM Elements - Catalog & Cart
+    const catalogGrid = document.getElementById('catalog-grid');
+    const searchInput = document.getElementById('search-input');
+    const productCountEl = document.getElementById('product-count');
+    const categoryPills = document.querySelectorAll('.category-pill');
+    const cartContainer = document.getElementById('cart-container');
+    const cartItemCountEl = document.getElementById('cart-item-count');
+
+    // Customer selection & inputs
+    const customerSelect = document.getElementById('customer-select');
+    const customerNameInput = document.getElementById('customer-name');
+    const customerPhoneInput = document.getElementById('customer-phone');
+    const customerEmailInput = document.getElementById('customer-email');
+    const customerAddressInput = document.getElementById('customer-address');
+    const toggleNewCustBtn = document.getElementById('toggle-new-cust-btn');
+
+    // Payment & Summary
+    const paymentMethodSelect = document.getElementById('payment-method');
+    const customDiscountInput = document.getElementById('custom-discount-input');
+    const discountChips = document.querySelectorAll('.discount-chip');
+    const summarySubtotal = document.getElementById('summary-subtotal');
+    const summaryDiscountRow = document.getElementById('summary-discount-row');
+    const summaryDiscountLabel = document.getElementById('summary-discount-label');
+    const summaryDiscountVal = document.getElementById('summary-discount-val');
+    const summaryTax = document.getElementById('summary-tax');
+    const summaryTotal = document.getElementById('summary-total');
+    const paidAmountInput = document.getElementById('paid-amount-input');
+    const summaryPending = document.getElementById('summary-pending');
+    const summaryStatusBadge = document.getElementById('summary-status-badge');
+    const paidErrorMsg = document.getElementById('paid-error-msg');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const clearBtn = document.getElementById('clear-btn');
+
+    // Modals
+    const receiptModal = document.getElementById('receipt-modal');
+    const printReceiptBtn = document.getElementById('print-receipt-btn');
+    const newBillBtn = document.getElementById('new-bill-btn');
+    const historyModal = document.getElementById('history-modal');
+    const openHistoryBtn = document.getElementById('open-history-btn');
+    const closeHistoryBtn = document.getElementById('close-history-btn');
+    const historyBadge = document.getElementById('history-badge');
+    const historySearchInput = document.getElementById('history-search-input');
+    const historyStatusFilter = document.getElementById('history-status-filter');
+    const historyTableBody = document.getElementById('history-table-body');
+    const historyEmptyMsg = document.getElementById('history-empty-msg');
+
+    // Dashboard Modal
+    const dashboardModal = document.getElementById('dashboard-modal');
+    const openDashboardBtn = document.getElementById('open-dashboard-btn');
+    const closeDashboardBtn = document.getElementById('close-dashboard-btn');
+    const dTabBtns = document.querySelectorAll('.d-tab-btn');
+
+    // Inventory Modal
+    const inventoryModal = document.getElementById('inventory-modal');
+    const openInventoryBtn = document.getElementById('open-inventory-btn');
+    const closeInventoryBtn = document.getElementById('close-inventory-btn');
+    const inventoryTableBody = document.getElementById('inventory-table-body');
+    const invSearchInput = document.getElementById('inv-search-input');
+    const btnOpenAddProduct = document.getElementById('btn-open-add-product');
+    const productFormModal = document.getElementById('product-form-modal');
+    const closeProductFormBtn = document.getElementById('close-product-form-btn');
+    const cancelProductFormBtn = document.getElementById('cancel-product-form-btn');
+    const productForm = document.getElementById('product-form');
+
+    // Customers Modal
+    const customersModal = document.getElementById('customers-modal');
+    const openCustomersBtn = document.getElementById('open-customers-btn');
+    const closeCustomersBtn = document.getElementById('close-customers-btn');
+    const customersTableBody = document.getElementById('customers-table-body');
+    const custSearchInput = document.getElementById('cust-search-input');
+    const btnOpenAddCustomer = document.getElementById('btn-open-add-customer');
+    const customerFormModal = document.getElementById('customer-form-modal');
+    const closeCustomerFormBtn = document.getElementById('close-customer-form-btn');
+    const cancelCustomerFormBtn = document.getElementById('cancel-customer-form-btn');
+    const customerForm = document.getElementById('customer-form');
+
+    // Cust History Submodal
+    const custHistoryModal = document.getElementById('cust-history-modal');
+    const closeCustHistoryBtn = document.getElementById('close-cust-history-btn');
+
+    // Toast Utility
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 3200);
+    }
+
+    // ============================================================
+    // DATA FETCHING: PRODUCTS & CUSTOMERS
+    // ============================================================
+    async function loadProducts() {
+      try {
+        const query = searchInput.value.trim();
+        const cat = selectedCategory;
+        const res = await fetch(`/api/products?q=${encodeURIComponent(query)}&category=${encodeURIComponent(cat)}`);
+        if (res.ok) {
+          products = await res.json();
+          renderCatalog(products);
+        }
+      } catch (err) {
+        showToast("Error loading products catalog from SQLite", true);
+      }
+      refreshHistoryBadge();
+    }
+
+    async function loadCustomers() {
+      try {
+        const res = await fetch('/api/customers');
+        if (res.ok) {
+          customers = await res.json();
+          renderCustomerSelectOptions();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderCustomerSelectOptions() {
+      customerSelect.innerHTML = `<option value="">-- Choose Registered Customer --</option>` +
+        customers.map(c => `
+          <option value="${c.id}">${c.name} (${c.phone})</option>
+        `).join('');
+    }
+
+    customerSelect.addEventListener('change', () => {
+      const cid = customerSelect.value;
+      if (!cid) return;
+      const c = customers.find(x => x.id == cid);
+      if (c) {
+        customerNameInput.value = c.name;
+        customerPhoneInput.value = c.phone;
+        customerEmailInput.value = c.email || "";
+        customerAddressInput.value = c.address || "";
+      }
+    });
+
+    toggleNewCustBtn.addEventListener('click', () => {
+      customerSelect.value = "";
+      customerNameInput.value = "";
+      customerPhoneInput.value = "";
+      customerEmailInput.value = "";
+      customerAddressInput.value = "";
+      customerNameInput.focus();
+    });
+
+    // ============================================================
+    // CATALOG RENDERING
+    // ============================================================
+    function renderCatalog(items) {
+      productCountEl.textContent = `${items.length} Items`;
+      if (items.length === 0) {
+        catalogGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No products found in SQLite database.</div>`;
+        return;
+      }
+
+      catalogGrid.innerHTML = items.map(p => {
+        const stock = p.stock_quantity;
+        const threshold = p.low_stock_threshold;
+        let badgeHtml = '';
+        let disableAdd = false;
+
+        if (stock <= 0) {
+          badgeHtml = `<span class="stock-badge out-stock">❌ Out of Stock</span>`;
+          disableAdd = true;
+        } else if (stock <= threshold) {
+          badgeHtml = `<span class="stock-badge low-stock">⚠️ Only ${stock} left</span>`;
+        } else {
+          badgeHtml = `<span class="stock-badge in-stock">✓ ${stock} in stock</span>`;
+        }
+
+        return `
+          <div class="product-card">
+            <div>
+              <div class="card-top">
+                <span class="prod-icon">${p.icon || '🛍️'}</span>
+                <div class="prod-tags">
+                  <span class="prod-category">${p.category || 'General'}</span>
+                  <span class="prod-sku">${p.sku}</span>
+                </div>
+              </div>
+              <div class="prod-name">${p.name}</div>
+              <div class="price-stock-row">
+                <div class="prod-price">₹${p.selling_price.toFixed(2)}</div>
+                ${badgeHtml}
+              </div>
+            </div>
+            <button 
+              class="add-btn" 
+              onclick="addToCart(${p.id})"
+              ${disableAdd ? 'disabled' : ''}
+            >
+              <span>+</span> ${disableAdd ? 'Out of Stock' : 'Add to Bill'}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Category Filter Pills
+    categoryPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        categoryPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        selectedCategory = pill.dataset.cat;
+        loadProducts();
+      });
+    });
+
+    searchInput.addEventListener('input', () => {
+      loadProducts();
+    });
+
+    // ============================================================
+    // CART & BILLING LOGIC
+    // ============================================================
+    function addToCart(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+
+      const availStock = prod.stock_quantity;
+      if (availStock <= 0) {
+        showToast(`'${prod.name}' is out of stock!`, true);
+        return;
+      }
+
+      if (cart.has(productId)) {
+        const item = cart.get(productId);
+        if (item.qty >= availStock) {
+          showToast(`Maximum stock reached (${availStock} units) for '${prod.name}'`, true);
+          return;
+        }
+        item.qty += 1;
+      } else {
+        cart.set(productId, {
+          id: prod.id,
+          code: prod.code,
+          name: prod.name,
+          sku: prod.sku,
+          price: prod.selling_price,
+          qty: 1,
+          stock: availStock
+        });
+      }
+      renderCart();
+    }
+
+    function updateQty(productId, delta) {
+      if (!cart.has(productId)) return;
+      const item = cart.get(productId);
+
+      if (delta > 0 && item.qty >= item.stock) {
+        showToast(`Cannot add more. Available stock is ${item.stock} units.`, true);
+        return;
+      }
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart.delete(productId);
+      }
+      renderCart();
+    }
+
+    function removeItem(productId) {
+      cart.delete(productId);
+      renderCart();
+    }
+
+    // Discount Presets Handling
+    discountChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        discountChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentDiscountPercent = parseFloat(chip.dataset.disc);
+        customDiscountInput.value = currentDiscountPercent;
+        renderCart();
+      });
+    });
+
+    customDiscountInput.addEventListener('input', (e) => {
+      let val = parseFloat(e.target.value) || 0;
+      val = Math.max(0, Math.min(100, val));
+      currentDiscountPercent = val;
+      discountChips.forEach(c => {
+        if (parseFloat(c.dataset.disc) === val) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
+      renderCart();
+    });
+
+    // Render Cart & Calculations
+    let currentGrandTotal = 0;
+
+    function renderCart() {
+      const items = Array.from(cart.values());
+      const totalCount = items.reduce((acc, i) => acc + i.qty, 0);
+      cartItemCountEl.textContent = `${totalCount} ${totalCount === 1 ? 'Item' : 'Items'}`;
+
+      if (items.length === 0) {
+        cartContainer.innerHTML = `
+          <div class="empty-cart-msg">
+            <div style="font-size: 2rem; margin-bottom: 8px;">🛒</div>
+            <div style="font-weight: 600; color: var(--text); margin-bottom: 4px;">Current bill is empty</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);">Select products from the catalog to build this customer order.</div>
+          </div>
+        `;
+        summarySubtotal.textContent = '₹0.00';
+        summaryDiscountRow.style.display = 'none';
+        summaryTax.textContent = '₹0.00';
+        summaryTotal.textContent = '₹0.00';
+        paidAmountInput.value = '';
+        summaryPending.textContent = '₹0.00';
+        summaryStatusBadge.textContent = 'Paid';
+        summaryStatusBadge.className = 'status-badge paid';
+        paidErrorMsg.style.display = 'none';
+        checkoutBtn.disabled = true;
+        currentGrandTotal = 0;
+        return;
+      }
+
+      cartContainer.innerHTML = items.map(item => `
+        <div class="cart-row">
+          <div>
+            <div class="cart-item-title">${item.name}</div>
+            <div class="cart-item-rate">₹${item.price.toFixed(2)} each &bull; SKU: ${item.sku}</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+          </div>
+          <div class="cart-item-total">
+            ₹${(item.price * item.qty).toFixed(2)}
+          </div>
+          <button class="del-btn" onclick="removeItem(${item.id})" title="Remove item">
+            ✕
+          </button>
+        </div>
+      `).join('');
+
+      // Math computations
+      const subtotal = items.reduce((acc, i) => acc + (i.price * i.qty), 0);
+      const discountAmount = subtotal * (currentDiscountPercent / 100.0);
+      const taxableSubtotal = Math.max(0, subtotal - discountAmount);
+      const tax = taxableSubtotal * 0.05; // 5% GST
+      currentGrandTotal = round(taxableSubtotal + tax);
+
+      summarySubtotal.textContent = `₹${subtotal.toFixed(2)}`;
+
+      if (discountAmount > 0) {
+        summaryDiscountRow.style.display = 'flex';
+        summaryDiscountLabel.textContent = `Discount (${currentDiscountPercent}%)`;
+        summaryDiscountVal.textContent = `-₹${discountAmount.toFixed(2)}`;
+      } else {
+        summaryDiscountRow.style.display = 'none';
+      }
+
+      summaryTax.textContent = `₹${tax.toFixed(2)}`;
+      summaryTotal.textContent = `₹${currentGrandTotal.toFixed(2)}`;
+
+      // Default paid amount to grand total if empty or not manually modified
+      if (paidAmountInput.dataset.manual !== "true" || !paidAmountInput.value) {
+        paidAmountInput.value = currentGrandTotal.toFixed(2);
+      }
+
+      updatePaymentStatusCalc();
+      checkoutBtn.disabled = false;
+    }
+
+    function round(num) {
+      return Math.round((num + Number.EPSILON) * 100) / 100;
+    }
+
+    // Payment Amount Input Calculation
+    function updatePaymentStatusCalc() {
+      if (cart.size === 0) return;
+
+      const rawPaid = paidAmountInput.value.trim();
+      const paid = rawPaid === '' ? currentGrandTotal : parseFloat(rawPaid) || 0;
+
+      if (paid > currentGrandTotal) {
+        paidErrorMsg.style.display = 'block';
+        checkoutBtn.disabled = true;
+        summaryPending.textContent = '₹0.00';
+        summaryStatusBadge.textContent = 'Invalid';
+        summaryStatusBadge.className = 'status-badge pending';
+        return;
+      }
+
+      paidErrorMsg.style.display = 'none';
+      checkoutBtn.disabled = false;
+
+      const pending = round(Math.max(0, currentGrandTotal - paid));
+      summaryPending.textContent = `₹${pending.toFixed(2)}`;
+
+      if (paid >= currentGrandTotal) {
+        summaryStatusBadge.textContent = 'Paid';
+        summaryStatusBadge.className = 'status-badge paid';
+      } else if (paid > 0) {
+        summaryStatusBadge.textContent = 'Partially Paid';
+        summaryStatusBadge.className = 'status-badge partially-paid';
+      } else {
+        summaryStatusBadge.textContent = 'Pending';
+        summaryStatusBadge.className = 'status-badge pending';
+      }
+    }
+
+    paidAmountInput.addEventListener('input', () => {
+      paidAmountInput.dataset.manual = "true";
+      updatePaymentStatusCalc();
+    });
+
+    // Clear Cart
+    clearBtn.addEventListener('click', () => {
+      if (cart.size > 0 && confirm("Are you sure you want to clear the current bill?")) {
+        cart.clear();
+        paidAmountInput.dataset.manual = "false";
+        renderCart();
+      }
+    });
+
+    // ============================================================
+    // CHECKOUT & BILL TRANSACTION
+    // ============================================================
+    checkoutBtn.addEventListener('click', async () => {
+      if (cart.size === 0) return;
+
+      const customerName = customerNameInput.value.trim() || "Guest Customer";
+      const customerPhone = customerPhoneInput.value.trim();
+
+      if (!customerPhone) {
+        showToast("Customer phone number is required.", true);
+        customerPhoneInput.focus();
+        return;
+      }
+
+      const cleanedPhone = customerPhone.replace(/[\s\-\(\)]/g, '');
+      if (!/^\+?[0-9]{7,15}$/.test(cleanedPhone)) {
+        showToast("Please enter a valid phone number (min 7 digits).", true);
+        customerPhoneInput.focus();
+        return;
+      }
+
+      const rawPaid = paidAmountInput.value.trim();
+      const paidAmount = rawPaid === '' ? currentGrandTotal : parseFloat(rawPaid);
+
+      if (isNaN(paidAmount) || paidAmount < 0) {
+        showToast("Please enter a valid paid amount.", true);
+        return;
+      }
+
+      if (paidAmount > currentGrandTotal) {
+        showToast("Paid amount cannot exceed total bill amount.", true);
+        return;
+      }
+
+      const itemsPayload = Array.from(cart.values()).map(i => ({
+        id: i.id,
+        code: i.code,
+        qty: i.qty
+      }));
+
+      checkoutBtn.disabled = true;
+      checkoutBtn.innerHTML = `<span>⏳</span> Saving Hisaab...`;
+
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerId: customerSelect.value ? parseInt(customerSelect.value) : null,
+            customerName: customerName,
+            customerPhone: customerPhone,
+            customerEmail: customerEmailInput.value.trim(),
+            customerAddress: customerAddressInput.value.trim(),
+            paymentMethod: paymentMethodSelect.value,
+            discountPercent: currentDiscountPercent,
+            paidAmount: paidAmount,
+            items: itemsPayload
+          })
+        });
+
+        const resData = await response.json();
+
+        if (!response.ok) {
+          throw new Error(resData.error || "Transaction failed");
+        }
+
+        showToast("Bill recorded in Hisaab SQLite3 database!", false);
+        showReceiptModal(resData);
+        loadProducts();
+        loadCustomers();
+        refreshHistoryBadge();
+
+      } catch (err) {
+        showToast(err.message, true);
+      } finally {
+        checkoutBtn.disabled = false;
+        checkoutBtn.innerHTML = `<span>🧾</span> Checkout &amp; Generate Bill`;
+      }
+    });
+
+    // ============================================================
+    // OFFICIAL RECEIPT MODAL
+    // ============================================================
+    function showReceiptModal(data) {
+      document.getElementById('r-inv-num').textContent = data.invoiceNumber;
+      document.getElementById('r-date').textContent = data.date;
+      document.getElementById('r-customer').textContent = data.customerName;
+      document.getElementById('r-phone').textContent = data.customerPhone || "N/A";
+      
+      const addrRow = document.getElementById('r-addr-row');
+      if (data.customerAddress) {
+        addrRow.style.display = 'block';
+        document.getElementById('r-addr').textContent = data.customerAddress;
+      } else {
+        addrRow.style.display = 'none';
+      }
+
+      document.getElementById('r-payment').textContent = data.paymentMethod;
+
+      const tbody = document.getElementById('r-items-body');
+      tbody.innerHTML = data.items.map(i => `
+        <tr>
+          <td>
+            <div style="font-weight: 700;">${i.name}</div>
+            <div style="font-size: 0.76rem; color: var(--text-muted);">${i.sku || ''}</div>
+          </td>
+          <td style="text-align: center;">${i.qty}</td>
+          <td style="text-align: right;">₹${i.price.toFixed(2)}</td>
+          <td style="text-align: right; font-weight: 700;">₹${i.total.toFixed(2)}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('r-subtotal').textContent = `₹${data.subtotal.toFixed(2)}`;
+
+      const rDiscRow = document.getElementById('r-discount-row');
+      if (data.discountAmount && data.discountAmount > 0) {
+        rDiscRow.style.display = 'flex';
+        document.getElementById('r-discount-label').textContent = `Discount (${data.discountPercent}%):`;
+        document.getElementById('r-discount').textContent = `-₹${data.discountAmount.toFixed(2)}`;
+      } else {
+        rDiscRow.style.display = 'none';
+      }
+
+      document.getElementById('r-tax').textContent = `₹${data.tax.toFixed(2)}`;
+      document.getElementById('r-grand').textContent = `₹${data.grandTotal.toFixed(2)}`;
+      document.getElementById('r-paid').textContent = `₹${data.paidAmount.toFixed(2)}`;
+      document.getElementById('r-pending').textContent = `₹${data.pendingAmount.toFixed(2)}`;
+
+      const rStatus = document.getElementById('r-status');
+      rStatus.textContent = data.paymentStatus;
+      rStatus.className = `status-badge ${data.paymentStatus.toLowerCase().replace(/\s+/g, '-')}`;
+
+      receiptModal.classList.add('active');
+    }
+
+    printReceiptBtn.addEventListener('click', () => {
+      window.print();
+    });
+
+    newBillBtn.addEventListener('click', () => {
+      receiptModal.classList.remove('active');
+      cart.clear();
+      paidAmountInput.dataset.manual = "false";
+      renderCart();
+      customerSelect.value = "";
+      customerNameInput.value = 'Guest Customer';
+      customerPhoneInput.value = '9876543210';
+      customerEmailInput.value = '';
+      customerAddressInput.value = '';
+    });
+
+    // ============================================================
+    // BILLING HISTORY MODAL
+    // ============================================================
+    async function refreshHistoryBadge() {
+      try {
+        const res = await fetch('/api/history');
+        if (res.ok) {
+          const bills = await res.json();
+          historyBadge.textContent = bills.length;
+        }
+      } catch (e) {}
+    }
+
+    async function loadAndShowHistory() {
+      const search = historySearchInput.value.trim();
+      const status = historyStatusFilter.value;
+      try {
+        const res = await fetch(`/api/history?search=${encodeURIComponent(search)}&status=${encodeURIComponent(status)}`);
+        if (!res.ok) throw new Error("Failed to fetch history");
+        const bills = await res.json();
+        renderHistoryTable(bills);
+      } catch (e) {
+        showToast("Error loading history from SQLite", true);
+      }
+      historyModal.classList.add('active');
+    }
+
+    function renderHistoryTable(bills) {
+      if (bills.length === 0) {
+        historyTableBody.innerHTML = "";
+        historyEmptyMsg.style.display = "block";
+        return;
+      }
+
+      historyEmptyMsg.style.display = "none";
+      historyTableBody.innerHTML = bills.map(b => {
+        const statusClass = b.paymentStatus.toLowerCase().replace(/\s+/g, '-');
+        const canCancel = b.paymentStatus !== "Cancelled";
+
+        return `
+          <tr>
+            <td style="font-weight: 700;">${b.invoiceNumber}</td>
+            <td style="font-size: 0.82rem; color: var(--text-muted);">${b.date}</td>
+            <td><strong>${b.customerName}</strong></td>
+            <td style="font-size: 0.82rem;">${b.customerPhone || 'N/A'}</td>
+            <td style="text-align: right; font-weight: 700;">₹${b.grandTotal.toFixed(2)}</td>
+            <td style="text-align: right; font-weight: 700;">₹${b.paidAmount.toFixed(2)}</td>
+            <td style="text-align: right; font-weight: 700;">₹${b.pendingAmount.toFixed(2)}</td>
+            <td style="text-align: center;">
+              <span class="status-badge ${statusClass}">${b.paymentStatus}</span>
+            </td>
+            <td>
+              <div style="display: flex; gap: 4px;">
+                <button class="btn-action-sm" onclick='viewPastBill(${JSON.stringify(b).replace(/'/g, "&apos;")})'>
+                  🔍 View
+                </button>
+                ${canCancel ? `
+                  <button class="btn-action-sm btn-danger-sm" onclick="cancelBill(${b.id})" title="Cancel bill and restore inventory stock">
+                    🔄 Cancel
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    window.viewPastBill = function(billData) {
+      historyModal.classList.remove('active');
+      showReceiptModal(billData);
+    };
+
+    window.cancelBill = async function(billId) {
+      if (!confirm("Are you sure you want to cancel this bill? This will restore all sold product stock back into the database.")) {
+        return;
+      }
+      try {
+        const res = await fetch(`/api/bills/${billId}/cancel`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to cancel bill");
+        showToast("Bill cancelled and inventory restored!", false);
+        loadAndShowHistory();
+        loadProducts();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+
+    openHistoryBtn.addEventListener('click', () => {
+      historySearchInput.value = "";
+      historyStatusFilter.value = "All";
+      loadAndShowHistory();
+    });
+
+    closeHistoryBtn.addEventListener('click', () => {
+      historyModal.classList.remove('active');
+    });
+
+    historySearchInput.addEventListener('input', () => {
+      loadAndShowHistory();
+    });
+
+    historyStatusFilter.addEventListener('change', () => {
+      loadAndShowHistory();
+    });
+
+    // ============================================================
+    // DASHBOARD & ANALYTICS
+    // ============================================================
+    async function loadDashboardStats(period = activeDashboardPeriod) {
+      try {
+        const res = await fetch(`/api/dashboard?period=${encodeURIComponent(period)}`);
+        if (!res.ok) throw new Error("Dashboard API error");
+        const stats = await res.json();
+
+        // Update Stat Cards
+        document.getElementById('d-stat-revenue').textContent = `₹${stats.revenue.periodRevenue.toFixed(2)}`;
+        document.getElementById('d-stat-collected').textContent = `₹${stats.revenue.periodPaid.toFixed(2)} collected`;
+
+        document.getElementById('d-stat-pending').textContent = `₹${stats.pendingDues.totalPendingDues.toFixed(2)}`;
+        document.getElementById('d-stat-pending-bills').textContent = `${stats.pendingDues.pendingBillsCount} pending bills`;
+
+        document.getElementById('d-stat-sales').textContent = stats.salesStats.periodSales;
+        document.getElementById('d-stat-units').textContent = `${stats.productStats.totalUnitsSold} total units sold`;
+
+        document.getElementById('d-stat-low-stock').textContent = stats.lowStockCount;
+
+        // Render Top Selling Table
+        const topBody = document.getElementById('top-selling-table-body');
+        if (stats.topSellingProducts.length === 0) {
+          topBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:20px;">No sales recorded yet.</td></tr>`;
+        } else {
+          topBody.innerHTML = stats.topSellingProducts.map(p => `
+            <tr>
+              <td style="font-weight: 700;">${p.product_name}</td>
+              <td style="font-size: 0.8rem; color: var(--text-muted);">${p.sku}</td>
+              <td><span class="prod-category">${p.category}</span></td>
+              <td style="text-align: right; font-weight: 700;">${p.total_sold} units</td>
+              <td style="text-align: right; font-weight: 700;">₹${p.revenue_generated.toFixed(2)}</td>
+            </tr>
+          `).join('');
+        }
+
+        // Render Low Stock Table
+        const lowBody = document.getElementById('low-stock-table-body');
+        if (stats.lowStockProducts.length === 0) {
+          lowBody.innerHTML = `<tr><td colspan="7" style="text-align:center; font-weight:700; padding:20px;">✓ All products have healthy stock levels!</td></tr>`;
+        } else {
+          lowBody.innerHTML = stats.lowStockProducts.map(p => `
+            <tr>
+              <td style="font-weight: 700;">${p.name}</td>
+              <td style="font-size: 0.8rem; color: var(--text-muted);">${p.sku}</td>
+              <td><span class="prod-category">${p.category}</span></td>
+              <td>₹${p.selling_price.toFixed(2)}</td>
+              <td><span class="stock-badge ${p.stock_quantity === 0 ? 'out-stock' : 'low-stock'}">${p.stock_quantity} units</span></td>
+              <td>${p.low_stock_threshold} units</td>
+              <td>
+                <button class="btn-action-sm" onclick="quickRestock(${p.id}, 20)">
+                  + Restock 20
+                </button>
+              </td>
+            </tr>
+          `).join('');
+        }
+
+      } catch (err) {
+        showToast("Error loading dashboard stats", true);
+      }
+    }
+
+    window.quickRestock = async function(productId, addUnits) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+      try {
+        const newStock = prod.stock_quantity + addUnits;
+        const res = await fetch(`/api/products/${productId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: prod.name,
+            sku: prod.sku,
+            barcode: prod.barcode,
+            category: prod.category,
+            selling_price: prod.selling_price,
+            cost_price: prod.cost_price,
+            stock_quantity: newStock,
+            low_stock_threshold: prod.low_stock_threshold
+          })
+        });
+        if (!res.ok) throw new Error("Restock failed");
+        showToast(`Restocked ${prod.name} to ${newStock} units!`);
+        loadProducts();
+        loadDashboardStats();
+      } catch (e) {
+        showToast(e.message, true);
+      }
+    };
+
+    openDashboardBtn.addEventListener('click', () => {
+      loadDashboardStats();
+      dashboardModal.classList.add('active');
+    });
+
+    closeDashboardBtn.addEventListener('click', () => {
+      dashboardModal.classList.remove('active');
+    });
+
+    dTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        dTabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeDashboardPeriod = btn.dataset.period;
+        loadDashboardStats(activeDashboardPeriod);
+      });
+    });
+
+    // ============================================================
+    // INVENTORY MANAGEMENT MODAL
+    // ============================================================
+    async function loadInventoryTable() {
+      const query = invSearchInput.value.trim();
+      try {
+        const res = await fetch(`/api/products?q=${encodeURIComponent(query)}`);
+        const list = await res.json();
+        renderInventoryTable(list);
+      } catch (e) {
+        showToast("Error loading inventory", true);
+      }
+    }
+
+    function renderInventoryTable(items) {
+      if (items.length === 0) {
+        inventoryTableBody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--text-muted);">No products found.</td></tr>`;
+        return;
+      }
+
+      inventoryTableBody.innerHTML = items.map(p => `
+        <tr>
+          <td style="font-size: 1.4rem;">${p.icon || '🛍️'}</td>
+          <td><strong>${p.name}</strong></td>
+          <td style="font-size: 0.85rem; font-weight: 700;">${p.sku}</td>
+          <td style="font-size: 0.82rem; color: var(--text-muted);">${p.barcode || '--'}</td>
+          <td><span class="prod-category">${p.category}</span></td>
+          <td style="text-align: right; font-weight: 700;">₹${p.selling_price.toFixed(2)}</td>
+          <td style="text-align: right;">
+            <span class="stock-badge ${p.stock_quantity <= 0 ? 'out-stock' : (p.stock_quantity <= p.low_stock_threshold ? 'low-stock' : 'in-stock')}">
+              ${p.stock_quantity}
+            </span>
+          </td>
+          <td style="text-align: right;">${p.low_stock_threshold}</td>
+          <td>
+            <div style="display: flex; gap: 4px;">
+              <button class="btn-action-sm" onclick='editProduct(${JSON.stringify(p).replace(/'/g, "&apos;")})'>✏️ Edit</button>
+              <button class="btn-action-sm btn-danger-sm" onclick="deleteProduct(${p.id})">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    openInventoryBtn.addEventListener('click', () => {
+      invSearchInput.value = "";
+      loadInventoryTable();
+      inventoryModal.classList.add('active');
+    });
+
+    closeInventoryBtn.addEventListener('click', () => {
+      inventoryModal.classList.remove('active');
+    });
+
+    invSearchInput.addEventListener('input', () => {
+      loadInventoryTable();
+    });
+
+    btnOpenAddProduct.addEventListener('click', () => {
+      document.getElementById('product-form-title').textContent = "Add New Product";
+      document.getElementById('p-form-id').value = "";
+      productForm.reset();
+      document.getElementById('p-form-icon').value = "🛍️";
+      document.getElementById('p-form-category').value = "General";
+      document.getElementById('p-form-threshold').value = "5";
+      document.getElementById('p-form-stock').value = "20";
+      productFormModal.classList.add('active');
+    });
+
+    closeProductFormBtn.addEventListener('click', () => { productFormModal.classList.remove('active'); });
+    cancelProductFormBtn.addEventListener('click', () => { productFormModal.classList.remove('active'); });
+
+    window.editProduct = function(p) {
+      document.getElementById('product-form-title').textContent = "Edit Product";
+      document.getElementById('p-form-id').value = p.id;
+      document.getElementById('p-form-name').value = p.name;
+      document.getElementById('p-form-category').value = p.category;
+      document.getElementById('p-form-sku').value = p.sku;
+      document.getElementById('p-form-barcode').value = p.barcode || "";
+      document.getElementById('p-form-price').value = p.selling_price;
+      document.getElementById('p-form-cost').value = p.cost_price || 0;
+      document.getElementById('p-form-stock').value = p.stock_quantity;
+      document.getElementById('p-form-threshold').value = p.low_stock_threshold;
+      document.getElementById('p-form-icon').value = p.icon || "🛍️";
+      productFormModal.classList.add('active');
+    };
+
+    productForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pid = document.getElementById('p-form-id').value;
+      const payload = {
+        name: document.getElementById('p-form-name').value.trim(),
+        category: document.getElementById('p-form-category').value.trim() || "General",
+        sku: document.getElementById('p-form-sku').value.trim().toUpperCase(),
+        barcode: document.getElementById('p-form-barcode').value.trim() || null,
+        selling_price: parseFloat(document.getElementById('p-form-price').value) || 0,
+        cost_price: parseFloat(document.getElementById('p-form-cost').value) || 0,
+        stock_quantity: parseInt(document.getElementById('p-form-stock').value) || 0,
+        low_stock_threshold: parseInt(document.getElementById('p-form-threshold').value) || 5,
+        icon: document.getElementById('p-form-icon').value.trim() || "🛍️"
+      };
+
+      try {
+        const url = pid ? `/api/products/${pid}` : '/api/products';
+        const method = pid ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to save product");
+
+        showToast(pid ? "Product updated successfully!" : "Product added successfully!");
+        productFormModal.classList.remove('active');
+        loadInventoryTable();
+        loadProducts();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    });
+
+    window.deleteProduct = async function(pid) {
+      if (!confirm("Are you sure you want to delete this product?")) return;
+      try {
+        const res = await fetch(`/api/products/${pid}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to delete product");
+        showToast("Product deleted successfully!");
+        loadInventoryTable();
+        loadProducts();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+
+    // ============================================================
+    // CUSTOMER MANAGEMENT MODAL
+    // ============================================================
+    async function loadCustomersTable() {
+      const q = custSearchInput.value.trim();
+      try {
+        const res = await fetch(`/api/customers?q=${encodeURIComponent(q)}`);
+        const list = await res.json();
+        renderCustomersTable(list);
+      } catch (e) {
+        showToast("Error loading customers", true);
+      }
+    }
+
+    function renderCustomersTable(items) {
+      if (items.length === 0) {
+        customersTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:var(--text-muted);">No customer records found.</td></tr>`;
+        return;
+      }
+
+      customersTableBody.innerHTML = items.map(c => `
+        <tr>
+          <td><strong>${c.name}</strong></td>
+          <td style="font-weight: 700;">${c.phone}</td>
+          <td style="font-size: 0.85rem; color: var(--text-muted);">${c.email || '--'}</td>
+          <td style="font-size: 0.85rem;">${c.address || '--'}</td>
+          <td>
+            <div style="display: flex; gap: 4px;">
+              <button class="btn-action-sm" onclick="viewCustomerHistory(${c.id}, '${c.name.replace(/'/g, "\\'")}')">📜 Purchases</button>
+              <button class="btn-action-sm" onclick='editCustomer(${JSON.stringify(c).replace(/'/g, "&apos;")})'>✏️ Edit</button>
+              <button class="btn-action-sm btn-danger-sm" onclick="deleteCustomer(${c.id})">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    openCustomersBtn.addEventListener('click', () => {
+      custSearchInput.value = "";
+      loadCustomersTable();
+      customersModal.classList.add('active');
+    });
+
+    closeCustomersBtn.addEventListener('click', () => {
+      customersModal.classList.remove('active');
+    });
+
+    custSearchInput.addEventListener('input', () => {
+      loadCustomersTable();
+    });
+
+    btnOpenAddCustomer.addEventListener('click', () => {
+      document.getElementById('customer-form-title').textContent = "Add New Customer";
+      document.getElementById('c-form-id').value = "";
+      customerForm.reset();
+      customerFormModal.classList.add('active');
+    });
+
+    closeCustomerFormBtn.addEventListener('click', () => { customerFormModal.classList.remove('active'); });
+    cancelCustomerFormBtn.addEventListener('click', () => { customerFormModal.classList.remove('active'); });
+
+    window.editCustomer = function(c) {
+      document.getElementById('customer-form-title').textContent = "Edit Customer Profile";
+      document.getElementById('c-form-id').value = c.id;
+      document.getElementById('c-form-name').value = c.name;
+      document.getElementById('c-form-phone').value = c.phone;
+      document.getElementById('c-form-email').value = c.email || "";
+      document.getElementById('c-form-address').value = c.address || "";
+      customerFormModal.classList.add('active');
+    };
+
+    customerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const cid = document.getElementById('c-form-id').value;
+      const payload = {
+        name: document.getElementById('c-form-name').value.trim(),
+        phone: document.getElementById('c-form-phone').value.trim(),
+        email: document.getElementById('c-form-email').value.trim() || null,
+        address: document.getElementById('c-form-address').value.trim() || null
+      };
+
+      try {
+        const url = cid ? `/api/customers/${cid}` : '/api/customers';
+        const method = cid ? 'PUT' : 'POST';
+        const res = await fetch(url, {
+          method: method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to save customer");
+
+        showToast(cid ? "Customer updated successfully!" : "Customer added successfully!");
+        customerFormModal.classList.remove('active');
+        loadCustomersTable();
+        loadCustomers();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    });
+
+    window.deleteCustomer = async function(cid) {
+      if (!confirm("Are you sure you want to delete this customer?")) return;
+      try {
+        const res = await fetch(`/api/customers/${cid}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to delete customer");
+        showToast("Customer deleted successfully!");
+        loadCustomersTable();
+        loadCustomers();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+
+    window.viewCustomerHistory = async function(cid, customerName) {
+      document.getElementById('cust-hist-title').textContent = `Purchase History: ${customerName}`;
+      document.getElementById('cust-hist-sub').textContent = `All bills and invoices recorded for this customer in Hisaab SQLite3`;
+      try {
+        const res = await fetch(`/api/customers/${cid}/history`);
+        const list = await res.json();
+        const tbody = document.getElementById('cust-hist-body');
+        const empty = document.getElementById('cust-hist-empty');
+
+        if (list.length === 0) {
+          tbody.innerHTML = "";
+          empty.style.display = "block";
+        } else {
+          empty.style.display = "none";
+          tbody.innerHTML = list.map(b => `
+            <tr>
+              <td style="font-weight:700;">${b.invoice_number}</td>
+              <td style="font-size:0.82rem;">${b.sale_date}</td>
+              <td style="font-weight:700;">₹${b.total_amount.toFixed(2)}</td>
+              <td>₹${b.paid_amount.toFixed(2)}</td>
+              <td>₹${b.pending_amount.toFixed(2)}</td>
+              <td><span class="status-badge ${b.payment_status.toLowerCase().replace(/\s+/g, '-')}">${b.payment_status}</span></td>
+              <td>
+                <button class="btn-action-sm" onclick='viewPastBill(${JSON.stringify(b).replace(/'/g, "&apos;")})'>🔍 View</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+        custHistoryModal.classList.add('active');
+      } catch (e) {
+        showToast("Error loading customer history", true);
+      }
+    };
+
+    closeCustHistoryBtn.addEventListener('click', () => {
+      custHistoryModal.classList.remove('active');
+    });
+
+    // Close Modals on background click
+    [receiptModal, historyModal, dashboardModal, inventoryModal, productFormModal, customersModal, customerFormModal, custHistoryModal].forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
+
+    // Professional Font Switcher Handler
+    const fontSelector = document.getElementById('font-selector');
+    const validFonts = ['inter', 'jakarta', 'outfit', 'roboto', 'mono'];
+
+    function applyFont(fontKey) {
+      if (!validFonts.includes(fontKey)) {
+        fontKey = 'inter';
+      }
+      validFonts.forEach(f => document.body.classList.remove(`font-${f}`));
+      // Clean up any legacy classes
+      document.body.classList.remove('font-patrick', 'font-architect', 'font-shantell', 'font-typewriter', 'font-modern');
+
+      document.body.classList.add(`font-${fontKey}`);
+      if (fontSelector) fontSelector.value = fontKey;
+      localStorage.setItem('hisaab_font', fontKey);
+    }
+
+    if (fontSelector) {
+      fontSelector.addEventListener('change', (e) => {
+        applyFont(e.target.value);
+      });
+    }
+
+    // Default to 'inter' for clean, sharp, professional appearance
+    let savedFont = localStorage.getItem('hisaab_font');
+    if (!validFonts.includes(savedFont)) {
+      savedFont = 'inter';
+    }
+    applyFont(savedFont);
+
+    // Initialize Application
+    loadProducts();
+    loadCustomers();
+  </script>
+</body>
+</html>
